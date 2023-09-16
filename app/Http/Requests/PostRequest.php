@@ -21,13 +21,35 @@ class PostRequest extends FormRequest
      */
     public function rules(): array
     {
+        if(request()->isMethod('post')){
+            return [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['required', 'string'],
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'category_id' => ['required', 'exists:categories,id'],
+                'tags' => ['array'],
+                'tags' => ['required', 'exists:tags,id'],
+            ];
+        } else {
+            return [
+                'title' => ['required', 'string', 'max:255'],
+                'description' => ['required', 'string'],
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'category_id' => ['required', 'exists:categories,id'],
+                'tags' => ['array'],
+                'tags' => ['required', 'exists:tags,id'],
+            ];
+        }
+    }
+
+    public function errorMessages(): array
+    {
         return [
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['required', 'text'],
-            'image' => ['required', 'string', 'max:255'],
-            'category_id' => ['required', 'exists:categories,id'],
-            'tags' => ['array'],
-            'tags' => ['required', 'exists:tags,name'],
+            'title.required' => 'A title is required',
+            'description.required' => 'A description is required',
+            'image.required' => 'An image is required',
+            'category_id.required' => 'A category is required',
+            'tags.required' => 'A tag is required',
         ];
     }
 }

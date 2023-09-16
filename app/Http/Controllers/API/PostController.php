@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -15,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('category')->paginate(10);
+        $posts = Post::with('category', 'tags')->paginate(10);
         return PostResource::collection($posts);
     }
 
@@ -24,13 +26,31 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $post = Post::create($request->validated());
 
-        // Attach categories and tags to the post if needed
-        $post->categories()->attach($request->categories);
-        $post->tags()->attach($request->tags);
+        try{
+            $selectedImage =  Str::random($length = 10).time().'.'.$request->image->getClientOriginalExtension();
 
-        return new PostResource($post);
+            // $request->image->move(public_path('images'), $selectedImage);
+
+            Storage::disk('public')->put($selectedImage, file_get_contents($request->image));
+
+            $post = Post::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'image' => $selectedImage,
+                'category_id' => $request->category_id,
+            ]);
+
+            $post->category()->associate($request->category_id);
+            $post->tags()->attach($request->tags);
+
+            return new PostResource($post);
+
+        }catch(\Exception $e){
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
+        }
 
     }
 
@@ -50,7 +70,7 @@ class PostController extends Controller
         $post->update($request->validated());
 
         // Attach categories and tags to the post if needed
-        $post->categories()->sync($request->categories);
+        $post->category()->associate($request->category);
         $post->tags()->sync($request->tags);
 
         return new PostResource($post);

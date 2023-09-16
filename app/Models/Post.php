@@ -9,6 +9,13 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'image',
+        'category_id',
+    ];
+
     public function category(){
         //  A post can only have one category, but a category can have many posts
         return $this->belongsTo(Category::class);
