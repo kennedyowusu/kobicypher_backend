@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\API\CategoryController;
+use App\Http\Controllers\API\PostController;
+use App\Http\Controllers\API\TagController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,4 +27,16 @@ Route::get('/categories/{category}', [CategoryController::class, 'show']);
 Route::post('/categories', [CategoryController::class, 'store']);
 Route::put('/categories/{category}', [CategoryController::class, 'update']);
 Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+Route::get('/posts', [PostController::class, 'index']);
+Route::get('/posts/{post}', [PostController::class, 'show']);
+Route::post('/posts', [PostController::class, 'store']);
+Route::put('/posts/{post}', [PostController::class, 'update']);
+Route::delete('/posts/{post}', [PostController::class, 'destroy']);
+
+Route::get('/tags', [TagController::class, 'index']);
+Route::get('/tags/{tag}', [TagController::class, 'show']);
+Route::post('/tags', [TagController::class, 'store']);
+Route::put('/tags/{tag}', [TagController::class, 'update']);
+Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
 
