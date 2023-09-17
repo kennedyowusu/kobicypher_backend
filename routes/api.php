@@ -34,9 +34,13 @@ Route::post('/posts', [PostController::class, 'store']);
 Route::put('/posts/{post}', [PostController::class, 'update']);
 Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
+Route::get('/posts/category/{category}', [PostController::class, 'getPostsByCategory']);
+
 Route::get('/tags', [TagController::class, 'index']);
 Route::get('/tags/{tag}', [TagController::class, 'show']);
 Route::post('/tags', [TagController::class, 'store']);
 Route::put('/tags/{tag}', [TagController::class, 'update']);
 Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
+
+Route::get('/posts/tag/{tag}', [PostController::class, 'getPostsByTag']);
 

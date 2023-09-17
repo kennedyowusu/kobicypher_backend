@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PostRequest;
 use App\Http\Resources\PostResource;
+use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -53,6 +54,30 @@ class PostController extends Controller
         }
 
     }
+
+    public function getPostsByCategory($category)
+    {
+        $category = Category::where('name', $category)->first();
+
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
+
+        $posts = Post::where('category_id', $category->id)->with('category', 'tags')->paginate(10);
+
+        return PostResource::collection($posts);
+    }
+
+    public function getPostsByTag($tag)
+    {
+        $posts = Post::whereHas('tags', function ($query) use ($tag) {
+            $query->where('name', $tag);
+        })->with('category', 'tags')->paginate(10);
+
+        return PostResource::collection($posts);
+    }
+
+
 
     /**
      * Display the specified resource.
