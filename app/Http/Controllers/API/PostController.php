@@ -39,6 +39,7 @@ class PostController extends Controller
                 'title' => $request->title,
                 'description' => $request->description,
                 'image' => $selectedImage,
+                'author' => $request->author,
                 'category_id' => $request->category_id,
             ]);
 

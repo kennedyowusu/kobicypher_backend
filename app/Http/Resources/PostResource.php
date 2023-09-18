@@ -21,6 +21,7 @@ class PostResource extends JsonResource
             'image' => $this->image,
 
             'category' => new CategoryResource($this->whenLoaded('category')),
+            'author' => $this->author,
             'tags' => TagResource::collection($this->whenLoaded('tags')),
         ];
     }
