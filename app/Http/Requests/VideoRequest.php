@@ -34,7 +34,7 @@ class VideoRequest extends FormRequest
                 'title' => 'string|max:255',
                 'link' => 'string|max:255',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'category_id' => 'required|exists:categories,id',
+                'category_id' => 'exists:categories,id',
             ];
         }
     }

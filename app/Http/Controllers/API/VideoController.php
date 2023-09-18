@@ -74,23 +74,30 @@ class VideoController extends Controller
      */
     public function update(VideoRequest $request, Video $video)
     {
-        try {
-            // Handle file upload
-            $selectedThumbnail = $this->handleFileUpload($request);
+        // try {
+        //     // Handle file upload
+        //     $selectedThumbnail = $this->handleFileUpload($request);
 
-            $video->update([
-                'title' => $request->title,
-                'link' => $request->link,
-                'image' => $selectedThumbnail,
-                'category_id' => $request->category_id,
-            ]);
+        //     $video->update([
+        //         'title' => $request->title,
+        //         'link' => $request->link,
+        //         'image' => $selectedThumbnail,
+        //         'category_id' => $request->category_id,
+        //     ]);
 
-            return new VideoResource($video);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        //     return new VideoResource($video);
+        // } catch (\Exception $e) {
+        //     return response()->json([
+        //         'message' => $e->getMessage()
+        //     ], 500);
+        // }
+
+        $video->update($request->validated());
+
+        // Attach categories and tags to the post if needed
+        $video->category()->associate($request->category);
+
+        return new VideoResource($video);
     }
 
     /**
