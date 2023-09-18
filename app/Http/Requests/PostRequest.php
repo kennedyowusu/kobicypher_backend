@@ -35,11 +35,11 @@ class PostRequest extends FormRequest
             return [
                 'title' => ['required', 'string', 'max:255'],
                 'description' => ['required', 'string'],
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                // 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'category_id' => ['required', 'exists:categories,id'],
-                'author' => ['string', 'max:50'],
-                'tags' => ['array'],
-                'tags' => ['required', 'exists:tags,id'],
+                // 'author' => ['string', 'max:50'],
+                // 'tags' => ['array'],
+                // 'tags' => ['required', 'exists:tags,id'],
             ];
         }
     }
