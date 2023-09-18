@@ -15,4 +15,10 @@ class Category extends Model
         //  A category can have many posts, but a post can only have one category
         return $this->hasMany(Post::class);
     }
+
+    public function videos()
+    {
+        return $this->hasMany(Video::class, 'category_id');
+    }
+
 }

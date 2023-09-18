@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\PostController;
 use App\Http\Controllers\API\TagController;
+use App\Http\Controllers\API\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,14 @@ Route::put('/tags/{tag}', [TagController::class, 'update']);
 Route::delete('/tags/{tag}', [TagController::class, 'destroy']);
 
 Route::get('/posts/tag/{tag}', [PostController::class, 'getPostsByTag']);
+
+Route::get('/videos', [VideoController::class, 'index']);
+Route::get('/videos/{video}', [VideoController::class, 'show']);
+Route::post('/videos', [VideoController::class, 'store']);
+Route::put('/videos/{video}', [VideoController::class, 'update']);
+Route::delete('/videos/{video}', [VideoController::class, 'destroy']);
+
+Route::get('/videos/category/{category}', [VideoController::class, 'getVideosByCategory']);
+
+// Route::get('/videos/tag/{tag}', [VideoController::class, 'getVideosByTag']);
 
