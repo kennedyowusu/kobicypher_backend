@@ -40,6 +40,7 @@ class PostController extends Controller
                 'description' => $request->description,
                 'image' => $selectedImage,
                 'author' => $request->author,
+                'isFeatured' => $request->isFeatured,
                 'category_id' => $request->category_id,
             ]);
 

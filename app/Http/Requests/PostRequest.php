@@ -28,6 +28,7 @@ class PostRequest extends FormRequest
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'category_id' => ['required', 'exists:categories,id'],
                 'author' => ['string', 'max:50'],
+                'isFeatured' => ['boolean'],
                 'tags' => ['array'],
                 'tags' => ['required', 'exists:tags,id'],
             ];
@@ -52,6 +53,7 @@ class PostRequest extends FormRequest
             'image.required' => 'An image is required',
             'category_id.required' => 'A category is required',
             'author.required' => 'An author is required',
+            'isFeatured.required' => 'A isFeatured is required',
             'tags.required' => 'A tag is required',
         ];
     }

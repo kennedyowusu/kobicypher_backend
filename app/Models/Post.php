@@ -15,6 +15,7 @@ class Post extends Model
         'image',
         'category_id',
         'author',
+        'isFeatured',
     ];
 
     public function category(){

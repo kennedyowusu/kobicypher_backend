@@ -22,6 +22,7 @@ class PostFactory extends Factory
             'image' => $this->faker->imageUrl(),
             'category_id' => $this->faker->numberBetween(1, 5),
             'author' => $this->faker->name(),
+            'isFeatured' => $this->faker->boolean(),
         ];
     }
 }
